@@ -22441,7 +22441,7 @@ var Component1 = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                'Hello World!'
+                'Hello shen!'
             );
         }
     }]);
