@@ -1,28 +1,40 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
+import CounterStore from '../stores/CounterStore';
+import * as Actions from '../action/Actions.js';
 
 class Counter extends Component {
     constructor(props){
         super(props);
 
+        this.onChange = this.onChange.bind(this);
         this.onClickIncrementButton = this.onClickIncrementButton.bind(this);
         this.onClickDecrementButton = this.onClickDecrementButton.bind(this);
-        
-        this.defaultProps={
-            iniValue: 0
-        }
 
-        this.state = { count: this.props.iniValue };
+        this.state = { 
+            count: CounterStore.getCounterValues()[props.caption] 
+        };
+    }
+
+    componentDidMount() {
+        CounterStore.addChangeListener(this.onChange);
+    }
+
+    componentWillUnmount() {
+        CounterStore.removeChangeListener(this.onChange);
+    }
+
+    onChange() {
+        const newCount = CounterStore.getCounterValues()[this.props.caption];
+        this.setState({count: newCount});
     }
 
     onClickIncrementButton(){
-        this.setState({count:this.state.count+1});
-        this.props.onChangeValue(1);
+        Actions.increment(this.props.caption);
     }
 
     onClickDecrementButton(){
-        this.setState({count:this.state.count-1});
-        this.props.onChangeValue(-1);
+        Actions.decrement(this.props.caption);
     }
     
     render() {
@@ -36,11 +48,5 @@ class Counter extends Component {
     }
 }
 
-
-Counter.propTypes={
-    caption: PropTypes.string,
-    iniValue: PropTypes.number,
-    onChangeValue: PropTypes.func
-}
 //导出组件
 export default Counter;
