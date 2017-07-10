@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
-import CounterStore from '../stores/CounterStore';
+import store from '../stores/Store'
 import * as Actions from '../action/Actions.js';
 
 class Counter extends Component {
@@ -11,30 +11,33 @@ class Counter extends Component {
         this.onClickIncrementButton = this.onClickIncrementButton.bind(this);
         this.onClickDecrementButton = this.onClickDecrementButton.bind(this);
 
-        this.state = { 
-            count: CounterStore.getCounterValues()[props.caption] 
+        this.state = this.getOwnState();
+    }
+
+    getOwnState() {
+        return {
+            value: store.getState()[this.props.caption],
         };
     }
 
-    componentDidMount() {
-        CounterStore.addChangeListener(this.onChange);
-    }
-
-    componentWillUnmount() {
-        CounterStore.removeChangeListener(this.onChange);
-    }
-
     onChange() {
-        const newCount = CounterStore.getCounterValues()[this.props.caption];
-        this.setState({count: newCount});
+        this.setState(this.getOwnState());
+    }
+
+    componentDidMount() {
+        store.subscribe(this.onChange);
+    }
+
+    componentWillUnmount(){
+        store.unsubscribe(this.onChange);
     }
 
     onClickIncrementButton(){
-        Actions.increment(this.props.caption);
+        store.dispatch(Actions.increment(this.props.caption));
     }
 
     onClickDecrementButton(){
-        Actions.decrement(this.props.caption);
+        store.dispatch(Actions.decrement(this.props.caption));
     }
     
     render() {
@@ -42,7 +45,7 @@ class Counter extends Component {
             <div>
                 <button onClick={this.onClickIncrementButton}>+</button>
                 <button onClick={this.onClickDecrementButton}>-</button>
-                <span>{this.props.caption} counter: {this.state.count}</span>
+                <span>{this.props.caption} counter: {this.state.value}</span>
             </div>
         )
     }
