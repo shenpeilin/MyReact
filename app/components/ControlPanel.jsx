@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
-import Counter from './Counter.jsx';
+import CounterContainer from './Counter.jsx';
 import Summary from './Summary.jsx';
 
 class ControlPanel extends Component {
     render() {
         return (
             <div>
-                <Counter caption="First"/>
-                <Counter caption="Second"/>
-                <Counter caption="Third"/>
+                <CounterContainer caption="First"/>
+                <CounterContainer caption="Second"/>
+                <CounterContainer caption="Third"/>
                 <Summary/>
             </div>
         )

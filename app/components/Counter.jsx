@@ -1,55 +1,46 @@
-import React, {Component} from 'react';
-import {PropTypes} from 'prop-types';
-import store from '../stores/Store'
+import React, { Component, PropTypes } from 'react';
+import {connect} from 'react-redux';
+
+import store from '../stores/Store.js';
 import * as Actions from '../action/Actions.js';
 
-class Counter extends Component {
-    constructor(props){
-        super(props);
+const buttonStyle = {
+  margin: '10px'
+};
 
-        this.onChange = this.onChange.bind(this);
-        this.onClickIncrementButton = this.onClickIncrementButton.bind(this);
-        this.onClickDecrementButton = this.onClickDecrementButton.bind(this);
-
-        this.state = this.getOwnState();
-    }
-
-    getOwnState() {
-        return {
-            value: store.getState()[this.props.caption],
-        };
-    }
-
-    onChange() {
-        this.setState(this.getOwnState());
-    }
-
-    componentDidMount() {
-        store.subscribe(this.onChange);
-    }
-
-    componentWillUnmount(){
-        store.unsubscribe(this.onChange);
-    }
-
-    onClickIncrementButton(){
-        store.dispatch(Actions.increment(this.props.caption));
-    }
-
-    onClickDecrementButton(){
-        store.dispatch(Actions.decrement(this.props.caption));
-    }
-    
-    render() {
-        return (
-            <div>
-                <button onClick={this.onClickIncrementButton}>+</button>
-                <button onClick={this.onClickDecrementButton}>-</button>
-                <span>{this.props.caption} counter: {this.state.value}</span>
-            </div>
-        )
-    }
+function Counter({caption, onIncrement, onDecrement, value}) {
+  return (
+    <div>
+      <button style={buttonStyle} onClick={onIncrement}>+</button>
+      <button style={buttonStyle} onClick={onDecrement}>-</button>
+      <span>{caption} count: {value}</span>
+    </div>
+  );
 }
 
-//导出组件
-export default Counter;
+Counter.propTypes = {
+  caption: PropTypes.string.isRequired,
+  onIncrement: PropTypes.func.isRequired,
+  onDecrement: PropTypes.func.isRequired,
+  value: PropTypes.number.isRequired
+};
+
+function mapStateToProps(state, ownProps) {
+  return {
+    value: state[ownProps.caption]
+  }
+}
+
+function mapDispatchToProps(dispatch, ownProps) {
+  return {
+    onIncrement: () => {
+      dispatch(Actions.increment(ownProps.caption));
+    },
+    onDecrement: () => {
+      dispatch(Actions.decrement(ownProps.caption));
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+

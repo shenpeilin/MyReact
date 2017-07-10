@@ -1,51 +1,25 @@
-import React, {Component} from 'react';
-import {PropTypes} from 'prop-types';
-import store from '../stores/Store'
-import * as Actions from '../action/Actions.js';
+import React, { PropTypes } from 'react';
+import {connect} from 'react-redux';
 
-class Summary extends Component {
-    constructor(props){
-        super(props);
-
-        this.onChange = this.onChange.bind(this);
-        this.state = this.getOwnState();
-    }
-
-    getOwnState() {
-      const state = store.getState();
-      let sum = 0;
-      for (let key in state){
-        if (state.hasOwnProperty(key)){
-          sum += state[key];
-        }
-      }
-
-      return {sum:sum};
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-      return nextState.sum !== this.state.sum;
-    }
-
-    onChange() {
-        this.setState(this.getOwnState());
-    }
-
-    componentDidMount() {
-        store.subscribe(this.onChange);
-    }
-
-    componentWillUnmount(){
-        store.unsubscribe(this.onChange);
-    }
-    
-    render() {
-      const sum = this.state.sum;
-      return (
-        <div>Total Count: {sum}</div>
-      )
-    }
+function Summary({value}) {
+  return (
+    <div>Total Count: {value}</div>
+  );
 }
 
-//导出组件
-export default Summary;
+Summary.PropTypes = {
+  value: PropTypes.number.isRequired
+};
+
+function mapStateToProps(state) {
+  let sum = 0;
+  for (const key in state) {
+    if (state.hasOwnProperty(key)) {
+      sum += state[key];
+    }
+  }
+  return {value: sum};
+}
+
+
+export default connect(mapStateToProps)(Summary);
