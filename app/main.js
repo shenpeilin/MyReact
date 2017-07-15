@@ -2,12 +2,13 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import {Provider} from 'react-redux';
-import ControlPanel from './components/ControlPanel.jsx';
-import store from './stores/Store'
+
+import TodoApp from './TodoApp';
+import store from './Store';
 
 ReactDom.render(
     <Provider store = {store}>
-        <ControlPanel />
+        <TodoApp />
     </Provider>,
     document.getElementById('content')
 );
