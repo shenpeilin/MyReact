@@ -4,10 +4,11 @@ import {connect} from 'react-redux';
 import TodoItem from './todoItem.js';
 import {toggleTodo, removeTodo} from '../actions.js';
 import {FilterTypes} from '../../constants.js';
+import css from './style.css';
 
 const TodoList = ({todos, onToggleTodo, onRemoveTodo}) => {
   return (
-    <ul className="todo-list">
+    <ul className={css.todo_list}>
     {
       todos.map((item) => (
         <TodoItem

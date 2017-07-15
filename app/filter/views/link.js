@@ -1,13 +1,15 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {setFilter} from '../actions.js';
+import css from './style.css';
 
 const Link = ({active, children, onClick}) => {
   if (active) {
-    return <b className="filter selected">{children}</b>;
+    return <b className="css.filter selected">{children}</b>;
   } else {
     return (
-      <a href="#" className="filter not-selected" onClick={(ev) => {
+      <a href="#" className="css.filter not-selected" onClick={(ev) => {
         ev.preventDefault();
         onClick();
       }}>

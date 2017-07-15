@@ -14,6 +14,18 @@ module.exports = {//注意这里是exports不是export
                 test: /\.(js|jsx)$/,//一个匹配loaders所处理的文件的拓展名的正则表达式，这里用来匹配js和jsx文件（必须）
                 exclude: /node_modules/,//屏蔽不需要处理的文件（文件夹）（可选）
                 loader: 'babel-loader'//loader的名称（必须）
+            },
+            {
+                test: /\.css$/,
+                loader: 'style-loader'
+            }, 
+            {
+                test: /\.css$/,
+                loader: 'css-loader',
+                query: {
+                    modules: true,
+                    localIdentName: '[name]__[local]___[hash:base64:5]'
+                }
             }
         ]
     }

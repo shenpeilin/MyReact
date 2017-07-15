@@ -3,27 +3,26 @@
   font-size: 30px;
 }
 
-.add-todo {
+.add_todo {
   position: relative;
 }
 
-.add-todo .new-todo {
+.add_todo .new_todo {
   display: block;
   margin: 0 0 0 50px;
   font-size: 30px;
   -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: antialiased;
-  font-smoothing: antialiased;
 }
 
-.add-todo .add-btn {
+.add_todo .add_btn {
   font-size: 30px;
   position: absolute;
   top: 0;
   right: 0;
 }
 
-.todo-list {
+.todo_list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -32,14 +31,14 @@
 }
 
 
-.todo-item {
+.todo_item {
   position: relative;
   height: 60px;
   line-height: 50px;
   vertical-align: middle;
 }
 
-.todo-item .toggle {
+.todo_item .toggle {
   height: 40px;
   -webkit-appearance: none;
   appearance: none;
@@ -48,21 +47,21 @@
   bottom: 0;
 }
 
-.todo-item .toggle:after {
+.todo_item .toggle:after {
   margin: 10px 0 0 0;
   content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
 }
 
-.todo-item .toggle:checked:after {
+.todo_item .toggle:checked:after {
   content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
 }
 
-.todo-item .text {
+.todo_item .text {
   margin: 0 0 0 50px;
   height: 40px;
 }
 
-.todo-item .remove {
+.todo_item .remove {
   border: 0;
   background: 0;
   display: none;
@@ -80,10 +79,10 @@
   appearance: none;
 }
 
-.todo-item:hover .remove {
+.todo_item:hover .remove {
   display: block
 }
 
-.todo-item .remove:hover {
+.todo_item .remove:hover {
   color: #af5b5e;
 }

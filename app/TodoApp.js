@@ -2,11 +2,11 @@ import React from 'react';
 import {view as Todos} from './todos/';
 import {view as Filter} from './filter/';
 
-function TodoApp(){
+export default function TodoApp(){
     return (
         <div>
-            <Todos />
-            <Filter />
+            <Todos/>
+            <Filter/>
         </div>
     )
 }
