@@ -1,20 +1,30 @@
-import React, {PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import { toggleTodo, removeTodo } from '../actions';
 import css from './style.css';
 
-const TodoItem = ({onToggle, onRemove, completed, text }) => {
-  const checkedProp = completed ? {checked: true} : {};
-  return (
-    <li
-      className={css.todo_item}
-      style={{
-        textDecoration: completed ? 'line-through' : 'none'
-      }}
-    >
-      <input className={css.toggle} type="checkbox" {...checkedProp} readOnly onClick={onToggle} />
-      <label className={css.text}>{text}</label>
-      <button className={css.remove} onClick={onRemove}>×</button>
-    </li>
-  );
+class TodoItem extends Component {
+  constructor(props){
+    super(props);
+    console.log(props);
+  }
+  
+  render(){
+    const checkedProp = this.props.completed ? {checked: true} : {};
+    return (
+      <li
+        className={css.todo_item}
+        style={{
+          textDecoration: this.props.completed ? 'line-through' : 'none'
+        }}
+      >
+        <input className={css.toggle} type="checkbox" {...checkedProp} readOnly onClick={this.props.onToggle} />
+        <label className={css.text}>{this.props.text}</label>
+        <button className={css.remove} onClick={this.props.onRemove}>×</button>
+      </li>
+    );
+  }
 }
 
 
@@ -25,4 +35,12 @@ TodoItem.propTypes = {
   text: PropTypes.string.isRequired
 }
 
-export default TodoItem;
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const {id} = ownProps;
+  return {
+    onToggle: () => dispatch(toggleTodo(id)),
+    onRemove: () => dispatch(removeTodo(id))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(TodoItem);

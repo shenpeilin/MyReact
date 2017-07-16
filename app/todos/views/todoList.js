@@ -5,18 +5,18 @@ import TodoItem from './todoItem.js';
 import {toggleTodo, removeTodo} from '../actions.js';
 import {FilterTypes} from '../../constants.js';
 import css from './style.css';
+import {selectVisibleTodos} from '../selector.js';
 
-const TodoList = ({todos, onToggleTodo, onRemoveTodo}) => {
+const TodoList = ({todos}) => {
   return (
     <ul className={css.todo_list}>
     {
       todos.map((item) => (
         <TodoItem
           key={item.id}
+          id={item.id}
           text={item.text}
           completed={item.completed}
-          onToggle={() => onToggleTodo(item.id)}
-          onRemove={() => onRemoveTodo(item.id)}
         />
         ))
     }
@@ -28,35 +28,12 @@ TodoList.propTypes = {
   todos: PropTypes.array.isRequired
 };
 
-const selectVisibleTodos = (todos, filter) => {
-  switch (filter) {
-    case FilterTypes.ALL:
-      return todos;
-    case FilterTypes.COMPLETED:
-      return todos.filter(item => item.completed);
-    case FilterTypes.UNCOMPLETED:
-      return todos.filter(item => !item.completed);
-    default:
-      throw new Error('unsupported filter');
-  }
-}
 
 const mapStateToProps = (state) => {
   return {
-    todos: selectVisibleTodos(state.todos, state.filter)
+    todos: selectVisibleTodos(state)
   };
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onToggleTodo: (id) => {
-      dispatch(toggleTodo(id));
-    },
-    onRemoveTodo: (id) => {
-      dispatch(removeTodo(id));
-    }
-  };
-};
 
 /*
 const mapDispatchToProps = (dispatch) => bindActionCreators({
@@ -65,4 +42,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 }, dispatch);
 */
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
+export default connect(mapStateToProps, null)(TodoList);
